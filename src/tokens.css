@@ -1,0 +1,35 @@
+/*
+ * @scope-creep/design — the token layer. The single source of truth for design
+ * decisions across the Scope Creep app ecosystem (Golden Path amendment #1). Tokens
+ * are runtime CSS custom properties so theme is data, not compiled code, and can be
+ * re-themed live and inherited by an embedded extension.
+ *
+ * Consume: `import "@scope-creep/design/tokens.css";`
+ */
+:root {
+  --sc-bg: #f7f7f5;
+  --sc-surface: #ffffff;
+  --sc-border: #e5e4df;
+  --sc-text: #1c1b19;
+  --sc-muted: #78756e;
+  --sc-accent: #6d5cff;
+  --sc-tag-bg: #efeefc;
+  --sc-warn: #d9822b;
+  --sc-danger: #d92b2b;
+  --sc-radius: 12px;
+  --sc-font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sc-bg: #141311;
+    --sc-surface: #1e1c1a;
+    --sc-border: #322f2b;
+    --sc-text: #f3f1ec;
+    --sc-muted: #a29d94;
+    --sc-accent: #9b8cff;
+    --sc-tag-bg: #2a2740;
+    --sc-warn: #d9822b;
+    --sc-danger: #e06666;
+  }
+}

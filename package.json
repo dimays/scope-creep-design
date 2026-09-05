@@ -1,0 +1,39 @@
+{
+  "name": "@scope-creep/design",
+  "version": "0.1.0",
+  "description": "Scope Creep's shared design system: runtime CSS-variable tokens + headless primitives.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens.css": "./src/tokens.css"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "bootstrap": "bun install",
+    "test": "tsc --noEmit && biome check && vitest run",
+    "build": "tsc",
+    "format": "biome check --write"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "react": "^19",
+    "react-dom": "^19",
+    "typescript": "^5.9.3",
+    "vitest": "^3"
+  }
+}
