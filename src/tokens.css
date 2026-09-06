@@ -16,8 +16,28 @@
   --sc-tag-bg: #efeefc;
   --sc-warn: #d9822b;
   --sc-danger: #d92b2b;
+
+  /* Status colors — promoted from per-app hardcodes (work-041 / ADR-013 §7b).
+     --sc-attention: a thread/queue is waiting on the Owner ("needs-you").
+     --sc-success: an agent is working, or a task landed green ("working"/done). */
+  --sc-attention: #e8833a;
+  --sc-success: #3aa76d;
+
   --sc-radius: 12px;
   --sc-font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Motion tokens (work-041). Delight lives in the 200ms nobody budgets for, so
+     duration and easing are a shared contract, not a per-component guess.
+       --sc-motion      base transition duration (hovers, borders, reveals)
+       --sc-motion-fast quick affordance feedback
+       --sc-motion-slow ambient loops (e.g. the working indicator's breathe)
+       --sc-ease        the standard curve for enter/change transitions
+       --sc-ease-breathe symmetric curve for looping/ambient motion */
+  --sc-motion-fast: 120ms;
+  --sc-motion: 150ms;
+  --sc-motion-slow: 1200ms;
+  --sc-ease: cubic-bezier(0.2, 0, 0, 1);
+  --sc-ease-breathe: cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,5 +51,40 @@
     --sc-tag-bg: #2a2740;
     --sc-warn: #d9822b;
     --sc-danger: #e06666;
+    --sc-attention: #f5975a;
+    --sc-success: #4fbf88;
   }
+}
+
+/*
+ * Reduced-motion is a CONTRACT, not a per-component guess (work-041 acceptance).
+ * Two layers, both automatic on importing this file:
+ *
+ * 1. Collapse the motion *tokens* to ~0. Any component that builds its motion on
+ *    var(--sc-motion*) honors the user's preference for free — the token system
+ *    itself carries the guarantee, so no component has to remember to.
+ * 2. A global safety net for motion that predates or bypasses the tokens (third-
+ *    party CSS, inline animations, infinite iteration counts). This is the widely
+ *    used prefers-reduced-motion reset, owned centrally instead of copied per app.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sc-motion-fast: 0.01ms;
+    --sc-motion: 0.01ms;
+    --sc-motion-slow: 0.01ms;
+  }
+
+  /* !important is load-bearing here: this global safety net must override
+     component-level animation/transition declarations that outrank a `*` selector.
+     It is the reduced-motion contract, owned centrally instead of copied per app. */
+  /* biome-ignore-start lint/complexity/noImportantStyles: intentional reduced-motion override. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* biome-ignore-end lint/complexity/noImportantStyles: end reduced-motion override. */
 }

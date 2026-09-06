@@ -20,11 +20,19 @@ Ship **tokens as the contract**, not components. Components stay bespoke per app
 read the same tokens, so twenty apps read as one family and adopt a token fix
 centrally.
 
-## What's here (v0.1)
-- `tokens.css` — the runtime token layer (color, radius, type; light + dark).
+## What's here (v0.2)
+- `tokens.css` — the runtime token layer (color, radius, type, **status**,
+  **motion**; light + dark) with a built-in **reduced-motion contract**: the
+  motion tokens collapse to ~0 under `prefers-reduced-motion`, so token-driven
+  motion honors the preference for free, plus a global safety-net reset.
 - `token(name)` — reference a token from JS/TS.
-- `VisuallyHidden` — the first headless a11y primitive. Focus trap, portals, and
-  live regions grow from here.
+- **Status contract** — `Status`, `STATUSES`, `statusToken()`, `statusLabel()`:
+  one small lifecycle vocabulary mapped to tokens and accessible labels, decided
+  once instead of re-guessed per surface.
+- **Headless primitives** (behavior + `data-sc-*` structural hooks; look stays in
+  the app on tokens): `Surface`, `Badge`, `StatusDot`, `WorkingIndicator`,
+  `ActivityRow`, `LiveRegion`, `VisuallyHidden`, and the
+  `usePrefersReducedMotion()` hook.
 
 ## Develop
 ```bash
