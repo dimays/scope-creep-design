@@ -17,6 +17,21 @@ const STATUS_TOKEN: Record<Status, string> = {
   idle: "border",
 };
 
+/**
+ * The design token to use when a status is rendered as TEXT (a label, pill, or
+ * chip caption) rather than as a fill/dot. The vivid `attention`/`success` hues
+ * fail WCAG AA as small text on our light surfaces, so text routes through the
+ * darkened `-text` variants (work-043). Statuses whose base token is already
+ * accessible as text map to that base token unchanged.
+ */
+const STATUS_TEXT_TOKEN: Record<Status, string> = {
+  "needs-you": "attention-text",
+  working: "success-text",
+  open: "accent",
+  closed: "muted",
+  idle: "border",
+};
+
 const STATUS_LABEL: Record<Status, string> = {
   "needs-you": "Needs you",
   working: "Working",
@@ -28,6 +43,15 @@ const STATUS_LABEL: Record<Status, string> = {
 /** The design-token name a status maps to, e.g. `statusToken("needs-you")` → `"attention"`. */
 export function statusToken(status: Status): string {
   return STATUS_TOKEN[status];
+}
+
+/**
+ * The design-token name to use when a status is shown as TEXT, e.g.
+ * `statusTextToken("working")` → `"success-text"`. Use this (not `statusToken`)
+ * for labels/pills/chips so status text clears WCAG AA on light surfaces.
+ */
+export function statusTextToken(status: Status): string {
+  return STATUS_TEXT_TOKEN[status];
 }
 
 /** The accessible label for a status, e.g. `statusLabel("needs-you")` → `"Needs you"`. */
