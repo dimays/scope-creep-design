@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.4.0 — 2026-09-07 (dark-only)
+Owner decision (2026-09-06): fix the product to dark mode ("I'll never want light
+mode"). Implements [work-045]; supersedes [work-043] by *removing* light mode rather
+than fixing its contrast.
+
+**Breaking (visual, not API).** The light palette is gone. `:root` now carries the
+dark values (previously under `@media (prefers-color-scheme: dark)`); the light
+`:root` values and the `prefers-color-scheme` light branch are dropped; `:root`
+declares `color-scheme: dark`. The token **contract** (every `--sc-*` name, the
+`-text` variants and `statusTextToken` included) is unchanged — consumers only
+re-pin, no renames. A consumer that was relying on a light render now renders dark.
+
+- The `--sc-*-text` variants now **equal** their fills: the dark fills already clear
+  WCAG AA as small text (~7.4–7.7:1 on `--sc-surface`), so no separate text hue is
+  needed. work-043's console follow-up (re-point text usages to `-text`) is therefore
+  moot in dark-only — fill and text tokens render identically.
+- Tagged `v0.4.0` for consumption (`github:dimays/scope-creep-design#v0.4.0`); this
+  jumps over the never-tagged v0.3.0 (its code is included here).
+
 ## 0.3.0 — 2026-09-06 (accessible status-text tokens)
 Additive; no breaking token renames. Fixes [work-043] (WCAG AA regression flagged
 from console PR #31); implements the [work-027] deferred item.

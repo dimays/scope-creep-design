@@ -5,39 +5,41 @@
  * re-themed live and inherited by an embedded extension.
  *
  * Consume: `import "@scope-creep/design/tokens.css";`
+ *
+ * DARK-ONLY (v0.4.0, work-045). The Owner fixed the product to dark mode ("I'll
+ * never want light mode"), so the committed palette below is the single look —
+ * there is no light `:root` and no `prefers-color-scheme` light branch to drift.
+ * `color-scheme: dark` tells the UA to render form controls, scrollbars, and the
+ * canvas dark too. The token *contract* (every `--sc-*` name, including the
+ * `-text` variants) is unchanged; only the light palette was dropped. This
+ * supersedes work-043's light-contrast fix by removing light mode — and note the
+ * `-text` variants now equal their fills, because the dark fills already clear
+ * WCAG AA as small text (~7.4–7.7:1), so no separate text hue is needed.
  */
 :root {
-  --sc-bg: #f7f7f5;
-  --sc-surface: #ffffff;
-  --sc-border: #e5e4df;
-  --sc-text: #1c1b19;
-  --sc-muted: #78756e;
-  --sc-accent: #6d5cff;
-  --sc-tag-bg: #efeefc;
+  color-scheme: dark;
+
+  --sc-bg: #141311;
+  --sc-surface: #1e1c1a;
+  --sc-border: #322f2b;
+  --sc-text: #f3f1ec;
+  --sc-muted: #a29d94;
+  --sc-accent: #9b8cff;
+  --sc-tag-bg: #2a2740;
   --sc-warn: #d9822b;
-  --sc-danger: #d92b2b;
+  --sc-danger: #e06666;
 
   /* Status colors — promoted from per-app hardcodes (work-041 / ADR-013 §7b).
      --sc-attention: a thread/queue is waiting on the Owner ("needs-you").
-     --sc-success: an agent is working, or a task landed green ("working"/done).
-     These are the VIVID fill/border hues (dots, borders, tints). Non-text UI only
-     needs ~3:1, so the signal stays saturated. For TEXT, route through the
-     `-text` variants below — the vivid hues fail WCAG AA (1.4.3) as small text
-     on our light surfaces. */
-  --sc-attention: #e8833a;
-  --sc-success: #3aa76d;
+     --sc-success: an agent is working, or a task landed green ("working"/done). */
+  --sc-attention: #f5975a;
+  --sc-success: #4fbf88;
 
-  /* On-surface TEXT variants for status color (work-043 / work-027 deferred item).
-     Same semantics, darkened until small text clears WCAG AA (>=4.5:1) on every
-     light background the console renders them over: --sc-surface (#fff),
-     --sc-bg (#f7f7f5), AND the 16% color-mix status tint (feedback chip / working
-     pill / in-progress label). Measured minimums (worst of the three = the tint):
-       --sc-success-text  #0b7240  -> 5.12:1   (was #3aa76d -> 2.58:1, FAIL)
-       --sc-attention-text #9a4d00 -> 5.25:1   (was #e8833a -> 2.33:1, FAIL)
-     Dark mode keeps the vivid hue: those already pass (~7.4-7.7:1), so the dark
-     `-text` values below simply equal the fills. */
-  --sc-attention-text: #9a4d00;
-  --sc-success-text: #0b7240;
+  /* On-surface TEXT variants (work-043). In dark mode the vivid fills already clear
+     WCAG AA as small text (~7.4–7.7:1 on --sc-surface), so the text variants equal
+     the fills. Kept as named tokens for contract stability (`statusTextToken`). */
+  --sc-attention-text: #f5975a;
+  --sc-success-text: #4fbf88;
 
   --sc-radius: 12px;
   --sc-font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -54,26 +56,6 @@
   --sc-motion-slow: 1200ms;
   --sc-ease: cubic-bezier(0.2, 0, 0, 1);
   --sc-ease-breathe: cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sc-bg: #141311;
-    --sc-surface: #1e1c1a;
-    --sc-border: #322f2b;
-    --sc-text: #f3f1ec;
-    --sc-muted: #a29d94;
-    --sc-accent: #9b8cff;
-    --sc-tag-bg: #2a2740;
-    --sc-warn: #d9822b;
-    --sc-danger: #e06666;
-    --sc-attention: #f5975a;
-    --sc-success: #4fbf88;
-    /* Dark-mode vivid fills already clear AA as text (~7.7:1 / ~7.4:1 on
-       --sc-surface), so the text variants keep the vivid hue here. */
-    --sc-attention-text: #f5975a;
-    --sc-success-text: #4fbf88;
-  }
 }
 
 /*
