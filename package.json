@@ -1,6 +1,6 @@
 {
   "name": "@scope-creep/design",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Scope Creep's shared design system: runtime CSS-variable tokens + headless primitives.",
   "type": "module",
   "exports": {
