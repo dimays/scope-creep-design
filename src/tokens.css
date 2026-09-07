@@ -5,23 +5,33 @@
  * re-themed live and inherited by an embedded extension.
  *
  * Consume: `import "@scope-creep/design/tokens.css";`
+ *
+ * DARK-ONLY (v0.3.0, work-045). The Owner fixed the product to dark mode
+ * ("I'll never want light mode"), so the committed palette below is the single
+ * look — there is no light `:root` and no `prefers-color-scheme` light branch to
+ * drift. `color-scheme: dark` tells the UA to render form controls, scrollbars,
+ * and the canvas dark too. The token *contract* (the --sc-* names) is unchanged;
+ * only the light palette was dropped (supersedes work-043's light-contrast fix —
+ * dark already passes WCAG AA).
  */
 :root {
-  --sc-bg: #f7f7f5;
-  --sc-surface: #ffffff;
-  --sc-border: #e5e4df;
-  --sc-text: #1c1b19;
-  --sc-muted: #78756e;
-  --sc-accent: #6d5cff;
-  --sc-tag-bg: #efeefc;
+  color-scheme: dark;
+
+  --sc-bg: #141311;
+  --sc-surface: #1e1c1a;
+  --sc-border: #322f2b;
+  --sc-text: #f3f1ec;
+  --sc-muted: #a29d94;
+  --sc-accent: #9b8cff;
+  --sc-tag-bg: #2a2740;
   --sc-warn: #d9822b;
-  --sc-danger: #d92b2b;
+  --sc-danger: #e06666;
 
   /* Status colors — promoted from per-app hardcodes (work-041 / ADR-013 §7b).
      --sc-attention: a thread/queue is waiting on the Owner ("needs-you").
      --sc-success: an agent is working, or a task landed green ("working"/done). */
-  --sc-attention: #e8833a;
-  --sc-success: #3aa76d;
+  --sc-attention: #f5975a;
+  --sc-success: #4fbf88;
 
   --sc-radius: 12px;
   --sc-font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -38,22 +48,6 @@
   --sc-motion-slow: 1200ms;
   --sc-ease: cubic-bezier(0.2, 0, 0, 1);
   --sc-ease-breathe: cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sc-bg: #141311;
-    --sc-surface: #1e1c1a;
-    --sc-border: #322f2b;
-    --sc-text: #f3f1ec;
-    --sc-muted: #a29d94;
-    --sc-accent: #9b8cff;
-    --sc-tag-bg: #2a2740;
-    --sc-warn: #d9822b;
-    --sc-danger: #e06666;
-    --sc-attention: #f5975a;
-    --sc-success: #4fbf88;
-  }
 }
 
 /*

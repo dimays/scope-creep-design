@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0 — 2026-09-07 (dark-only)
+Owner decision (2026-09-06): fix the product to dark mode ("I'll never want light
+mode"). Implements [work-045]; supersedes the light-contrast fix [work-043] by
+removing light mode rather than fixing it.
+
+**Breaking (visual, not API):** the light palette is gone. The `:root` tokens now
+carry the dark values (previously under `@media (prefers-color-scheme: dark)`), the
+light `:root` values and the `prefers-color-scheme` light branch are dropped, and
+`:root` declares `color-scheme: dark`. The token **contract** (every `--sc-*` name)
+is unchanged, so consumers need only re-pin — no token renames. Consumers that were
+relying on a light render will now render dark.
+
 ## 0.2.0 — 2026-09-06 (status + motion tokens, first primitives)
 Additive; no breaking token renames. Implements [work-041] / [ADR-013] §7b.
 
